@@ -25,6 +25,11 @@ Makefile*
 =======
 *.pro.user*
 
+*.cbp
+
 # Failed patch
 *.orig
 *.rej
+
+CMakeFiles
+cmake_install.cmake

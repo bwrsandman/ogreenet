@@ -39,10 +39,12 @@ include_directories(${OGRE_INCLUDE_DIR}
 
 set(HDRS
     ${ENet_INCLUDE_DIR}/OgreENet.h
+    ${ENet_INCLUDE_DIR}/OgreENetManager.h
 )
  
 set(SRCS
     ./OgreENet.cpp
+    ./OgreENetManager.cpp
     ${HDRS}
 )
 
