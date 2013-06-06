@@ -28,9 +28,9 @@
 
 #include "OgreENetManager.h"
 #include "OgreENetException.h"
-#include "OgreENetHost.h"
 #include "OgreENetAddress.h"
 #include "OgreENetPeer.h"
 #include "OgreENetEvent.h"
+#include "OgreENetHost.h"
 
 #endif // OGREENET_H

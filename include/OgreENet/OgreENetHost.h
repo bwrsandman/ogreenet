@@ -26,8 +26,6 @@
 
 namespace OgreENet {
 
-class OgreENetPeer;
-
 class OgreENetHost
 {
     friend class OgreENetManager;
@@ -36,10 +34,13 @@ class OgreENetHost
     std::list<ENetPeer *> peers;
 
     OgreENetHost(const OgreENetAddress& address, size_t maxClients, size_t maxChannels, enet_uint32 incomingBandwidth, enet_uint32 outgoingBandwidth);
+    OgreENetHost(size_t maxClients, size_t maxChannels, enet_uint32 incomingBandwidth, enet_uint32 outgoingBandwidth);
+
     ~OgreENetHost();
 
 public:
     int service(OgreENetEvent& event, enet_uint32 timeout = 0);
+    OgreENetPeer connect(const OgreENetAddress& address, size_t channelCount, enet_uint32 userData);
 
 protected:
     void handleEvent(OgreENetEvent& event);

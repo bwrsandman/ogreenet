@@ -21,7 +21,10 @@
 
 #include "OgreENet.h"
 
-OgreENet::OgreENetHost::OgreENetHost(const OgreENet::OgreENetAddress &address, size_t maxClients, size_t maxChannels, enet_uint32 incomingBandwidth, enet_uint32 outgoingBandwidth)
+namespace OgreENet
+{
+
+OgreENetHost::OgreENetHost(const OgreENetAddress &address, size_t maxClients, size_t maxChannels, enet_uint32 incomingBandwidth, enet_uint32 outgoingBandwidth)
     : _host(enet_host_create(&address.enet_addr(), maxClients, maxChannels, incomingBandwidth, outgoingBandwidth))
 {
     if (!_host) {
@@ -32,19 +35,43 @@ OgreENet::OgreENetHost::OgreENetHost(const OgreENet::OgreENetAddress &address, s
     }
 }
 
-OgreENet::OgreENetHost::~OgreENetHost()
+OgreENetHost::OgreENetHost(size_t maxClients, size_t maxChannels, enet_uint32 incomingBandwidth, enet_uint32 outgoingBandwidth)
+    : _host(enet_host_create(NULL, maxClients, maxChannels, incomingBandwidth, outgoingBandwidth))
+{
+    if (!_host) {
+        Ogre::String strErr = "****** OgreENetException ****** An error occurred while trying to create an ENet client host";
+        Ogre::LogManager::getSingleton().logMessage(Ogre::LogMessageLevel::LML_CRITICAL, strErr);
+
+        throw OgreENetException(OGREENET_ERR_HOST_NOT_CREATED, strErr, __func__, __FILE__, __LINE__);
+    }
+}
+
+OgreENetHost::~OgreENetHost()
 {
     enet_host_destroy(_host);
 }
 
-int OgreENet::OgreENetHost::service(OgreENetEvent &event, enet_uint32 timeout)
+int OgreENetHost::service(OgreENetEvent &event, enet_uint32 timeout)
 {
     int ret = enet_host_service(_host, &event.enet_event(), timeout);
     handleEvent(event);
     return ret;
 }
 
-void OgreENet::OgreENetHost::handleEvent(OgreENetEvent &event)
+OgreENetPeer OgreENetHost::connect(const OgreENetAddress &address, size_t channelCount, enet_uint32 userData)
+{
+    ENetPeer* peer = enet_host_connect(_host, &address.enet_addr(), channelCount, userData);
+    if (!peer) {
+        Ogre::String strErr = "****** OgreENetException ****** An error occurred while trying to create a connection";
+        Ogre::LogManager::getSingleton().logMessage(Ogre::LogMessageLevel::LML_CRITICAL, strErr);
+
+        throw OgreENetException(OGREENET_ERR_NOT_CONN, strErr, __func__, __FILE__, __LINE__);
+    }
+
+    return OgreENetPeer(peer);
+}
+
+void OgreENetHost::handleEvent(OgreENetEvent &event)
 {
     switch(event.type()) {
     case ENET_EVENT_TYPE_CONNECT:
@@ -59,4 +86,6 @@ void OgreENet::OgreENetHost::handleEvent(OgreENetEvent &event)
     default:
         break;
     }
+}
+
 }

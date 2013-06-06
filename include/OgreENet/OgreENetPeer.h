@@ -29,6 +29,7 @@ namespace OgreENet {
 class OgreENetPeer
 {
     friend class OgreENetEvent;
+    friend class OgreENetHost;
 
     ENetPeer* _peer;
 
