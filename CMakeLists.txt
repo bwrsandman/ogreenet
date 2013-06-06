@@ -44,6 +44,7 @@ set(HDRS
     ${ENet_INCLUDE_DIR}/OgreENetHost.h
     ${ENet_INCLUDE_DIR}/OgreENetAddress.h
     ${ENet_INCLUDE_DIR}/OgreENetEvent.h
+    ${ENet_INCLUDE_DIR}/OgreENetPeer.h
 )
  
 set(SRCS
@@ -53,6 +54,7 @@ set(SRCS
     ./OgreENetHost.cpp
     ./OgreENetAddress.cpp
     ./OgreENetEvent.cpp
+    ./OgreENetPeer.cpp
     ${HDRS}
 )
 
