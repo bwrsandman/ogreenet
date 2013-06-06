@@ -88,4 +88,20 @@ void OgreENetHost::handleEvent(OgreENetEvent &event)
     }
 }
 
+void OgreENetHost::capture(OgreENetEvent &event, enet_uint32 timeout)
+{
+    while(service(event, timeout) > 0) {
+        switch(event.type()) {
+        case ENET_EVENT_TYPE_CONNECT:
+            _injectConnect(event);
+            break;
+        case ENET_EVENT_TYPE_DISCONNECT:
+            _injectDisconnect(event);
+            break;
+        default:
+            break;
+        }
+    }
+}
+
 }

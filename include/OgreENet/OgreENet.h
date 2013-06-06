@@ -26,11 +26,12 @@
 
 #include "Ogre.h"
 
-#include "OgreENetManager.h"
 #include "OgreENetException.h"
 #include "OgreENetAddress.h"
 #include "OgreENetPeer.h"
 #include "OgreENetEvent.h"
 #include "OgreENetHost.h"
+#include "OgreENetManager.h"
 
 #endif // OGREENET_H
+

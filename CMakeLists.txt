@@ -48,7 +48,6 @@ set(HDRS
 )
  
 set(SRCS
-    ./OgreENet.cpp
     ./OgreENetManager.cpp
     ./OgreENetException.cpp
     ./OgreENetHost.cpp

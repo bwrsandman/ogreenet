@@ -27,11 +27,6 @@
 namespace OgreENet
 {
 
-// Forward declaration
-class OgreENetHost;
-class OgreENetAddress;
-class OgreENetEvent;
-
 //!  OgreENetManager class.
 /*!
     The OgreENetManager is responsible for creating and deleting Sockets.
@@ -80,10 +75,10 @@ public:
     OgreENetAddress *createAddress(enet_uint32 host, enet_uint16 port);
     OgreENetAddress *createAddress(const Ogre::String& hostName, enet_uint16 port);
 
+    OgreENetEvent *createEvent();
+
     OgreENetHost *createServerHost(const OgreENetAddress& address, int maxClients, int maxChannels = 0, int incomingBandwidth = 0, int outgoingBandwidth = 0);
     OgreENetHost *createClientHost(int maxClients, int maxChannels = 0, int incomingBandwidth = 0, int outgoingBandwidth = 0);
-
-    OgreENetEvent createEvent();
 
     ~OgreENetManager();
 
@@ -93,6 +88,7 @@ private:
     bool mCleanup;
     bool mInitialized;
     std::list<OgreENetHost *> mHostList;
+    std::list<OgreENetEvent *> mEventList;
     std::list<OgreENetAddress *> mAddressList;
 };
 }
