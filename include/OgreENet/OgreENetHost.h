@@ -19,16 +19,21 @@
     http://www.gnu.org/copyleft/lesser.txt.
 */
 
-#ifndef OGREENET_H
-#define OGREENET_H
+#ifndef OGREENETHOST_H
+#define OGREENETHOST_H
 
-#include <enet/enet.h>
+#include "OgreENet.h"
 
-#include "Ogre.h"
+namespace OgreENet {
+class OgreENetHost
+{
+    friend class OgreENetManager;
 
-#include "OgreENetManager.h"
-#include "OgreENetException.h"
-#include "OgreENetHost.h"
-#include "OgreENetAddress.h"
+    ENetHost* _host;
 
-#endif // OGREENET_H
+    OgreENetHost(const OgreENetAddress& address, size_t maxClients, size_t maxChannels, enet_uint32 incomingBandwidth, enet_uint32 outgoingBandwidth);
+    ~OgreENetHost();
+};
+}
+
+#endif // OGREENETHOST_H

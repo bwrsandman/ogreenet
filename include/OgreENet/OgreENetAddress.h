@@ -19,16 +19,29 @@
     http://www.gnu.org/copyleft/lesser.txt.
 */
 
-#ifndef OGREENET_H
-#define OGREENET_H
+#ifndef OGREENETADDRESS_H
+#define OGREENETADDRESS_H
 
-#include <enet/enet.h>
+#include "OgreENet.h"
 
-#include "Ogre.h"
+namespace OgreENet {
+class OgreENetAddress
+{
+    friend class OgreENetManager;
 
-#include "OgreENetManager.h"
-#include "OgreENetException.h"
-#include "OgreENetHost.h"
-#include "OgreENetAddress.h"
+    ENetAddress _address;
 
-#endif // OGREENET_H
+    OgreENetAddress(enet_uint32 host, enet_uint16 port);
+    OgreENetAddress(const Ogre::String& hostName, enet_uint16 port);
+
+    inline void setHost(const Ogre::String& hostName) { enet_address_set_host(&_address, hostName.c_str()); }
+    inline void setHost(enet_uint32 host) { _address.host = host; }
+
+    inline void setPort(int port) { _address.port = port; }
+
+public:
+    inline const ENetAddress& enet_addr() const { return _address; }
+};
+}
+
+#endif // OGREENETADDRESS_H

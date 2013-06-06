@@ -76,6 +76,11 @@ public:
     void initialize();
     void deinitialize();
 
+    OgreENetAddress *createAddress(enet_uint32 host, enet_uint16 port);
+    OgreENetAddress *createAddress(const Ogre::String& hostName, enet_uint16 port);
+
+    OgreENetHost *createServerHost(const OgreENetAddress& address, int maxClients, int maxChannels = 0, int incomingBandwidth = 0, int outgoingBandwidth = 0);
+    OgreENetHost *createClientHost(int maxClients, int maxChannels = 0, int incomingBandwidth = 0, int outgoingBandwidth = 0);
 
     ~OgreENetManager();
 

@@ -175,7 +175,94 @@ void OgreENetManager::deinitialize()
     msSingleton = NULL;
 }
 
+OgreENetAddress *OgreENetManager::createAddress(enet_uint32 host, enet_uint16 port)
 {
+    Ogre::String strText = "Preparing to create address, number of created addresses is currently ";
+    strText += Ogre::StringConverter::toString(mAddressList.size());
+    Ogre::LogManager::getSingleton().logMessage(Ogre::LogMessageLevel::LML_TRIVIAL, strText);
+
+    if(!mInitialized) {
+        Ogre::String strErr = "****** OgreENetException ****** Cannot create address because either the OgreENetManager has not been started, or it has been cleaned up";
+        Ogre::LogManager::getSingleton().logMessage(Ogre::LogMessageLevel::LML_CRITICAL, strErr);
+
+        throw OgreENetException(OGREENET_ERR_NOT_INIT, strErr, __func__, __FILE__, __LINE__);
+    }
+
+    if(mCleanup) {
+        Ogre::String strErr = "****** OgreENetException ****** Cannot create address because it is in the process of being cleaned-up";
+        Ogre::LogManager::getSingleton().logMessage(Ogre::LogMessageLevel::LML_CRITICAL, strErr);
+
+        throw OgreENetException(OGREENET_ERR_CLEANUP, strErr, __func__, __FILE__, __LINE__);
+    }
+
+    OgreENetAddress *ret = new OgreENetAddress(host, port);
+    mAddressList.push_back(ret);
+
+    strText = "Address created OK, number of created addresses is now ";
+    strText += Ogre::StringConverter::toString(mAddressList.size());
+    Ogre::LogManager::getSingleton().logMessage(Ogre::LogMessageLevel::LML_TRIVIAL, strText);
+
+    return ret;
+}
+
+OgreENetAddress *OgreENetManager::createAddress(const Ogre::String& hostName, enet_uint16 port)
+{
+    Ogre::String strText = "Preparing to create address, number of created addresses is currently ";
+    strText += Ogre::StringConverter::toString(mAddressList.size());
+    Ogre::LogManager::getSingleton().logMessage(Ogre::LogMessageLevel::LML_TRIVIAL, strText);
+
+    if(!mInitialized) {
+        Ogre::String strErr = "****** OgreENetException ****** Cannot create address because either the OgreENetManager has not been started, or it has been cleaned up";
+        Ogre::LogManager::getSingleton().logMessage(Ogre::LogMessageLevel::LML_CRITICAL, strErr);
+
+        throw OgreENetException(OGREENET_ERR_NOT_INIT, strErr, __func__, __FILE__, __LINE__);
+    }
+
+    if(mCleanup) {
+        Ogre::String strErr = "****** OgreENetException ****** Cannot create address because it is in the process of being cleaned-up";
+        Ogre::LogManager::getSingleton().logMessage(Ogre::LogMessageLevel::LML_CRITICAL, strErr);
+
+        throw OgreENetException(OGREENET_ERR_CLEANUP, strErr, __func__, __FILE__, __LINE__);
+    }
+
+    OgreENetAddress *ret = new OgreENetAddress(hostName, port);
+    mAddressList.push_back(ret);
+
+    strText = "Address created OK, number of created addresses is now ";
+    strText += Ogre::StringConverter::toString(mAddressList.size());
+    Ogre::LogManager::getSingleton().logMessage(Ogre::LogMessageLevel::LML_TRIVIAL, strText);
+
+    return ret;
+}
+
+OgreENetHost *OgreENetManager::createServerHost(const OgreENetAddress &address, int maxClients, int maxChannels, int incomingBandwidth, int outgoingBandwidth)
+{
+    Ogre::String strText = "Preparing to create server host, number of created hosts is currently ";
+    strText += Ogre::StringConverter::toString(mHostList.size());
+    Ogre::LogManager::getSingleton().logMessage(Ogre::LogMessageLevel::LML_TRIVIAL, strText);
+
+    if(!mInitialized) {
+        Ogre::String strErr = "****** OgreENetException ****** Cannot create host because either the OgreENetManager has not been started, or it has been cleaned up";
+        Ogre::LogManager::getSingleton().logMessage(Ogre::LogMessageLevel::LML_CRITICAL, strErr);
+
+        throw OgreENetException(OGREENET_ERR_NOT_INIT, strErr, __func__, __FILE__, __LINE__);
+    }
+
+    if(mCleanup) {
+        Ogre::String strErr = "****** OgreENetException ****** Cannot create host because it is in the process of being cleaned-up";
+        Ogre::LogManager::getSingleton().logMessage(Ogre::LogMessageLevel::LML_CRITICAL, strErr);
+
+        throw OgreENetException(OGREENET_ERR_CLEANUP, strErr, __func__, __FILE__, __LINE__);
+    }
+
+    OgreENetHost *ret = new OgreENetHost(address, maxClients, maxChannels, incomingBandwidth, outgoingBandwidth);
+    mHostList.push_back(ret);
+
+    strText = "Server host created OK, number of created hosts is now ";
+    strText += Ogre::StringConverter::toString(mHostList.size());
+    Ogre::LogManager::getSingleton().logMessage(Ogre::LogMessageLevel::LML_TRIVIAL, strText);
+
+    return ret;
 }
 
 OgreENetManager::~OgreENetManager()

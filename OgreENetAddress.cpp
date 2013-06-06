@@ -19,16 +19,17 @@
     http://www.gnu.org/copyleft/lesser.txt.
 */
 
-#ifndef OGREENET_H
-#define OGREENET_H
+#include "OgreENet.h"
 
-#include <enet/enet.h>
+OgreENet::OgreENetAddress::OgreENetAddress(enet_uint32 host, enet_uint16 port)
+{
+    setHost(host);
+    setPort(port);
+}
 
-#include "Ogre.h"
+OgreENet::OgreENetAddress::OgreENetAddress(const Ogre::String& hostName, enet_uint16 port)
+{
+    setHost(hostName);
+    setPort(port);
+}
 
-#include "OgreENetManager.h"
-#include "OgreENetException.h"
-#include "OgreENetHost.h"
-#include "OgreENetAddress.h"
-
-#endif // OGREENET_H

@@ -19,16 +19,20 @@
     http://www.gnu.org/copyleft/lesser.txt.
 */
 
-#ifndef OGREENET_H
-#define OGREENET_H
+#include "OgreENet.h"
 
-#include <enet/enet.h>
+OgreENet::OgreENetHost::OgreENetHost(const OgreENet::OgreENetAddress &address, size_t maxClients, size_t maxChannels, enet_uint32 incomingBandwidth, enet_uint32 outgoingBandwidth)
+    : _host(enet_host_create(&address.enet_addr(), maxClients, maxChannels, incomingBandwidth, outgoingBandwidth))
+{
+    if (!_host) {
+        Ogre::String strErr = "****** OgreENetException ****** An error occurred while trying to create an ENet server host";
+        Ogre::LogManager::getSingleton().logMessage(Ogre::LogMessageLevel::LML_CRITICAL, strErr);
 
-#include "Ogre.h"
+        throw OgreENetException(OGREENET_ERR_HOST_NOT_CREATED, strErr, __func__, __FILE__, __LINE__);
+    }
+}
 
-#include "OgreENetManager.h"
-#include "OgreENetException.h"
-#include "OgreENetHost.h"
-#include "OgreENetAddress.h"
-
-#endif // OGREENET_H
+OgreENet::OgreENetHost::~OgreENetHost()
+{
+    enet_host_destroy(_host);
+}
