@@ -40,17 +40,22 @@ include_directories(${OGRE_INCLUDE_DIR}
 set(HDRS
     ${ENet_INCLUDE_DIR}/OgreENet.h
     ${ENet_INCLUDE_DIR}/OgreENetManager.h
+    ${ENet_INCLUDE_DIR}/OgreENetException.h
 )
  
 set(SRCS
     ./OgreENet.cpp
     ./OgreENetManager.cpp
+    ./OgreENetException.cpp
     ${HDRS}
 )
+
+add_definitions("-std=c++0x")
 
 add_library(${PROJ} ${SRCS})
 
 set(INCLUDE_INSTALL_DIR include/${PROJ})
+target_link_libraries(${PROJ} ${ENET_LIB})
 
 install(TARGETS ${PROJ}
     RUNTIME DESTINATION bin

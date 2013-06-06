@@ -20,3 +20,13 @@
 */
 
 #include "OgreENet.h"
+
+namespace OgreENet
+{
+
+OgreENetException::OgreENetException(int number, const Ogre::String &description, const Ogre::String &source, const char *file, long line)
+    : Ogre::Exception(number, description, source, "OgreENetException", file, line)
+{
+}
+
+}

@@ -19,4 +19,39 @@
     http://www.gnu.org/copyleft/lesser.txt.
 */
 
+#ifndef OGREENETEXCEPTION_H
+#define OGREENETEXCEPTION_H
+
 #include "OgreENet.h"
+
+namespace OgreENet {
+
+enum OGREENET_EXCEPTION_CODE
+{
+    OGREENET_ERR_ENET = 1000,
+    OGREENET_ERR_BAD_ADDRESS,
+    OGREENET_ERR_WAIT,
+    OGREENET_ERR_FAIL,
+    OGREENET_ERR_INVALID_HANDLE,
+    OGREENET_ERR_SHUTDOWN,
+    OGREENET_ERR_TIMEOUT,
+    OGREENET_ERR_HOST_NOT_CREATED,
+    OGREENET_ERR_ALREADY_INIT,
+    OGREENET_ERR_ALREADY_CONN,
+    OGREENET_ERR_CLEANUP,
+    OGREENET_ERR_NO_REMOTE_CONN,
+    OGREENET_ERR_NOT_CONN,
+    OGREENET_ERR_NOT_INIT,
+    OGREENET_ERR_ADDRESS_EXISTS,
+    OGREENET_ERR_BAD_SOCK_TYPE
+};
+
+class OgreENetException : public Ogre::Exception
+{
+public:
+    OgreENetException(int number, const Ogre::String& description, const Ogre::String& source, const char* file, long line);
+
+};
+}
+
+#endif // OGREENETEXCEPTION_H

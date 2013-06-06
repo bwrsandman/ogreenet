@@ -1,5 +1,5 @@
 /*
-    This file is part of OgreSocks.
+    This file is part of OgreENet.
     OgreENet is a ENet wrapper for Ogre3d
     Copyright (C) 2013  Sandy Carter
 
@@ -22,7 +22,11 @@
 #ifndef OGREENET_H
 #define OGREENET_H
 
-#include "enet/enet.h"
+#include <enet/enet.h>
+
 #include "Ogre.h"
+
+#include "OgreENetManager.h"
+#include "OgreENetException.h"
 
 #endif // OGREENET_H

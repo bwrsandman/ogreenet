@@ -1,5 +1,5 @@
 /*
-    This file is part of OgreSocks.
+    This file is part of OgreENet.
     OgreENet is a ENet wrapper for Ogre3d
     Copyright (C) 2013  Sandy Carter
 
@@ -22,10 +22,15 @@
 #ifndef OGREENETMANAGER_H
 #define OGREENETMANAGER_H
 
-#include "OgreSingleton.h"
+#include "OgreENet.h"
 
 namespace OgreENet
 {
+
+// Forward declaration
+class OgreENetHost;
+class OgreENetAddress;
+
 //!  OgreENetManager class.
 /*!
     The OgreENetManager is responsible for creating and deleting Sockets.
@@ -68,11 +73,19 @@ public:
     */
     static OgreENetManager* getSingletonPtr(void);
 
-    void Initialise();
-    void CleanUp();
+    void initialize();
+    void deinitialize();
+
+
     ~OgreENetManager();
+
 private:
     OgreENetManager();
+
+    bool mCleanup;
+    bool mInitialized;
+    std::list<OgreENetHost *> mHostList;
+    std::list<OgreENetAddress *> mAddressList;
 };
 }
 
