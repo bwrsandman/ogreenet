@@ -30,6 +30,7 @@ namespace OgreENet
 // Forward declaration
 class OgreENetHost;
 class OgreENetAddress;
+class OgreENetEvent;
 
 //!  OgreENetManager class.
 /*!
@@ -81,6 +82,8 @@ public:
 
     OgreENetHost *createServerHost(const OgreENetAddress& address, int maxClients, int maxChannels = 0, int incomingBandwidth = 0, int outgoingBandwidth = 0);
     OgreENetHost *createClientHost(int maxClients, int maxChannels = 0, int incomingBandwidth = 0, int outgoingBandwidth = 0);
+
+    OgreENetEvent createEvent();
 
     ~OgreENetManager();
 

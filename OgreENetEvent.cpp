@@ -19,17 +19,8 @@
     http://www.gnu.org/copyleft/lesser.txt.
 */
 
-#ifndef OGREENET_H
-#define OGREENET_H
+#include "OgreENet.h"
 
-#include <enet/enet.h>
-
-#include "Ogre.h"
-
-#include "OgreENetManager.h"
-#include "OgreENetException.h"
-#include "OgreENetHost.h"
-#include "OgreENetAddress.h"
-#include "OgreENetEvent.h"
-
-#endif // OGREENET_H
+OgreENet::OgreENetEvent::OgreENetEvent()
+{
+}

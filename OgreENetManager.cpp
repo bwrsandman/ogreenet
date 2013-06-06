@@ -265,6 +265,11 @@ OgreENetHost *OgreENetManager::createServerHost(const OgreENetAddress &address, 
     return ret;
 }
 
+OgreENetEvent OgreENetManager::createEvent()
+{
+     return OgreENetEvent();
+}
+
 OgreENetManager::~OgreENetManager()
 {
     Ogre::LogManager::getSingleton().logMessage("Destroying the OgreENetManager");

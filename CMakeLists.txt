@@ -43,6 +43,7 @@ set(HDRS
     ${ENet_INCLUDE_DIR}/OgreENetException.h
     ${ENet_INCLUDE_DIR}/OgreENetHost.h
     ${ENet_INCLUDE_DIR}/OgreENetAddress.h
+    ${ENet_INCLUDE_DIR}/OgreENetEvent.h
 )
  
 set(SRCS
@@ -51,6 +52,7 @@ set(SRCS
     ./OgreENetException.cpp
     ./OgreENetHost.cpp
     ./OgreENetAddress.cpp
+    ./OgreENetEvent.cpp
     ${HDRS}
 )
 
