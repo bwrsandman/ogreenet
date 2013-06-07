@@ -26,18 +26,6 @@
 
 namespace OgreENet {
 
-/**
-    To recieve buffered keyboard input, derive a class from this, and implement the
-    methods here. Then set the call back to your Keyboard instance with Keyboard::setEventCallback
-*/
-class OgreENetListener
-{
-public:
-    virtual ~OgreENetListener() {}
-    virtual bool hostConnected(const OgreENetEvent &arg) = 0;
-    virtual bool hostDisconnected(const OgreENetEvent &arg) = 0;
-};
-
 class OgreENetHost
 {
     friend class OgreENetManager;
@@ -70,8 +58,9 @@ protected:
     OgreENetListener *mListener;
 
 private:
-    inline void _injectConnect(OgreENetEvent &arg) { if (mListener) mListener->hostConnected(arg); }
-    inline void _injectDisconnect(OgreENetEvent &arg) { if (mListener) mListener->hostDisconnected(arg); }
+    inline void _injectConnect(OgreENetEvent &event) { if (mListener) mListener->hostConnected(event); }
+    inline void _injectDisconnect(OgreENetEvent &event) { if (mListener) mListener->hostDisconnected(event); }
+    inline void _injectReceive(OgreENetEvent &event) { if (mListener) mListener->hostReceived(event); }
 };
 
 }

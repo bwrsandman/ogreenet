@@ -98,6 +98,9 @@ void OgreENetHost::capture(OgreENetEvent &event, enet_uint32 timeout)
         case ENET_EVENT_TYPE_DISCONNECT:
             _injectDisconnect(event);
             break;
+        case ENET_EVENT_TYPE_RECEIVE:
+            _injectReceive(event);
+            break;
         default:
             break;
         }

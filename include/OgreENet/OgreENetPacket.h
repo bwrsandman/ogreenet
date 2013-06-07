@@ -19,10 +19,32 @@
     http://www.gnu.org/copyleft/lesser.txt.
 */
 
+#ifndef OGREENETPACKET_H
+#define OGREENETPACKET_H
+
 #include "OgreENet.h"
 
-OgreENet::OgreENetPeer::OgreENetPeer(ENetPeer *peer)
-    : _peer(peer)
+namespace OgreENet
 {
+
+class OgreENetPacket
+{
+    friend class OgreENetEvent;
+
+    ENetPacket* _packet;
+
+    OgreENetPacket(ENetPacket* packet);
+    OgreENetPacket(const void* data, size_t dataLength, enet_uint32 flags);
+
+public:
+    inline void destroy() { enet_packet_destroy(_packet); }
+    inline size_t dataLength() const { return _packet->dataLength; }
+    inline const enet_uint8* data() const { return _packet->data; }
+    inline int resize(size_t dataLength) { return enet_packet_resize(_packet, dataLength); }
+
+};
+
 }
+
+#endif // OGREENETPACKET_H
 

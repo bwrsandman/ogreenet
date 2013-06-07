@@ -45,15 +45,15 @@ set(HDRS
     ${ENet_INCLUDE_DIR}/OgreENetAddress.h
     ${ENet_INCLUDE_DIR}/OgreENetEvent.h
     ${ENet_INCLUDE_DIR}/OgreENetPeer.h
+    ${ENet_INCLUDE_DIR}/OgreENetListener.h
+    ${ENet_INCLUDE_DIR}/OgreENetPacket.h
 )
  
 set(SRCS
     ./OgreENetManager.cpp
     ./OgreENetException.cpp
     ./OgreENetHost.cpp
-    ./OgreENetAddress.cpp
-    ./OgreENetEvent.cpp
-    ./OgreENetPeer.cpp
+    ./OgreENetPacket.cpp
     ${HDRS}
 )
 

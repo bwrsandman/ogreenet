@@ -21,15 +21,20 @@
 
 #include "OgreENet.h"
 
-OgreENet::OgreENetAddress::OgreENetAddress(enet_uint32 host, enet_uint16 port)
+namespace OgreENet
 {
-    setHost(host);
-    setPort(port);
-}
 
-OgreENet::OgreENetAddress::OgreENetAddress(const Ogre::String& hostName, enet_uint16 port)
-{
-    setHost(hostName);
-    setPort(port);
-}
+    OgreENetPacket::OgreENetPacket(ENetPacket* packet) :
+            _packet(packet)
+    {
+        if (NULL == _packet)
+            throw std::runtime_error("Could not create packet");
+    }
 
+    OgreENetPacket::OgreENetPacket(const void* data, size_t dataLength, enet_uint32 flags) :
+            _packet(enet_packet_create(data, dataLength, flags))
+    {
+        if (NULL == _packet)
+            throw std::runtime_error("Could not create packet");
+    }
+}

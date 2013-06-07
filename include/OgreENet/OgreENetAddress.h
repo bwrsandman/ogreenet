@@ -28,11 +28,13 @@ namespace OgreENet {
 class OgreENetAddress
 {
     friend class OgreENetManager;
+    friend class OgreENetPeer;
 
     ENetAddress _address;
 
-    OgreENetAddress(enet_uint32 host, enet_uint16 port);
-    OgreENetAddress(const Ogre::String& hostName, enet_uint16 port);
+    OgreENetAddress(const ENetAddress& address) : _address(address) {}
+    OgreENetAddress(enet_uint32 host, enet_uint16 port) { setHost(host); setPort(port); }
+    OgreENetAddress(const Ogre::String& hostName, enet_uint16 port) { setHost(hostName); setPort(port); }
 
     inline void setHost(const Ogre::String& hostName) { enet_address_set_host(&_address, hostName.c_str()); }
     inline void setHost(enet_uint32 host) { _address.host = host; }
@@ -41,6 +43,8 @@ class OgreENetAddress
 
 public:
     inline const ENetAddress& enet_addr() const { return _address; }
+    inline enet_uint32 host() const { return _address.host; }
+    inline enet_uint16 port() const { _address.port; }
 };
 }
 

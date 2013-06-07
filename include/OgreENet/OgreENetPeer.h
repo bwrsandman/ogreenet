@@ -33,11 +33,13 @@ class OgreENetPeer
 
     ENetPeer* _peer;
 
-    OgreENetPeer(ENetPeer* peer);
+    OgreENetPeer(ENetPeer *peer) : _peer(peer) {}
 
 public:
     inline ENetPeer* enet_peer() { return _peer; }
-
+    inline OgreENetAddress address() { return OgreENetAddress(_peer->address); }
+    inline void* data() const { return _peer->data; }
+    inline void setData(void *data) { _peer->data = data; }
 };
 
 }

@@ -31,11 +31,11 @@ class OgreENetEvent
 
     ENetEvent _event;
 
-    OgreENetEvent();
+    OgreENetEvent() {}
 
 public:
-    // inline OgreENetPacket packet() { return _event.peer; }
-    inline OgreENetPeer peer() { return OgreENetPeer(_event.peer); }
+    inline OgreENetPacket packet() const { return _event.packet; }
+    inline OgreENetPeer peer() const { return OgreENetPeer(_event.peer); }
     inline ENetEventType type() const { return _event.type; }
     inline enet_uint8 channelID() const { return _event.channelID; }
     inline enet_uint32 data() const { return _event.data; }

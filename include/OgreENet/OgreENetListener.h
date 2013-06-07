@@ -19,8 +19,27 @@
     http://www.gnu.org/copyleft/lesser.txt.
 */
 
+#ifndef OGREENETLISTENER_H
+#define OGREENETLISTENER_H
+
 #include "OgreENet.h"
 
-OgreENet::OgreENetEvent::OgreENetEvent()
+namespace OgreENet {
+
+/**
+    To recieve buffered enet events, derive a class from this, and implement the
+    methods here. Then set the call back to your Host instance with
+    OgreENetHost::setEventCallback
+*/
+class OgreENetListener
 {
+public:
+    virtual ~OgreENetListener() {}
+    virtual bool hostConnected(const OgreENetEvent &event) = 0;
+    virtual bool hostReceived(const OgreENetEvent &event) = 0;
+    virtual bool hostDisconnected(const OgreENetEvent &event) = 0;
+};
+
 }
+
+#endif // OGREENETLISTENER_H
