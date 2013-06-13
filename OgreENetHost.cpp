@@ -77,33 +77,20 @@ void OgreENetHost::handleEvent(OgreENetEvent &event)
     case ENET_EVENT_TYPE_CONNECT:
         // Remember the new peer.
         peers.push_back(event.peer().enet_peer());
+        _injectConnect(event);
         break;
     case ENET_EVENT_TYPE_DISCONNECT:
+        _injectDisconnect(event);
         // This is where you are informed about disconnects.
         // Simply remove the peer from the list of all peers.
         peers.erase(std::find(peers.begin(), peers.end(), event.peer().enet_peer()));
         break;
+    case ENET_EVENT_TYPE_RECEIVE:
+        _injectReceive(event);
+        event.packet().destroy();
+        break;
     default:
         break;
-    }
-}
-
-void OgreENetHost::capture(OgreENetEvent &event, enet_uint32 timeout)
-{
-    while(service(event, timeout) > 0) {
-        switch(event.type()) {
-        case ENET_EVENT_TYPE_CONNECT:
-            _injectConnect(event);
-            break;
-        case ENET_EVENT_TYPE_DISCONNECT:
-            _injectDisconnect(event);
-            break;
-        case ENET_EVENT_TYPE_RECEIVE:
-            _injectReceive(event);
-            break;
-        default:
-            break;
-        }
     }
 }
 

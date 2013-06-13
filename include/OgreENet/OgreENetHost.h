@@ -51,8 +51,6 @@ public:
     */
     virtual void setEventCallback(OgreENetListener *listener) { mListener = listener;}
 
-    virtual void capture(OgreENetEvent &event, enet_uint32 timeout=0);
-
 protected:
     void handleEvent(OgreENetEvent& event);
     OgreENetListener *mListener;
