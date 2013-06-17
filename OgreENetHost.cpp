@@ -48,6 +48,11 @@ OgreENetHost::OgreENetHost(size_t maxClients, size_t maxChannels, enet_uint32 in
 
 OgreENetHost::~OgreENetHost()
 {
+    for (std::list<OgreENetPeer*>::iterator it = connectedPeers.begin(); it != connectedPeers.end(); ++it) {
+        (*it)->disconnectNow();
+        delete(*it);
+    }
+    connectedPeers.clear();
     enet_host_destroy(_host);
 }
 
@@ -58,7 +63,7 @@ int OgreENetHost::service(OgreENetEvent &event, enet_uint32 timeout)
     return ret;
 }
 
-OgreENetPeer OgreENetHost::connect(const OgreENetAddress &address, size_t channelCount, enet_uint32 userData)
+OgreENetPeer* OgreENetHost::connect(const OgreENetAddress &address, size_t channelCount, enet_uint32 userData)
 {
     ENetPeer* peer = enet_host_connect(_host, &address.enet_addr(), channelCount, userData);
     if (!peer) {
@@ -67,8 +72,9 @@ OgreENetPeer OgreENetHost::connect(const OgreENetAddress &address, size_t channe
 
         throw OgreENetException(OGREENET_ERR_NOT_CONN, strErr, __func__, __FILE__, __LINE__);
     }
-
-    return OgreENetPeer(peer);
+    OgreENetPeer* ret = new OgreENetPeer(peer);
+    connectedPeers.push_back(ret);
+    return ret;
 }
 
 void OgreENetHost::handleEvent(OgreENetEvent &event)

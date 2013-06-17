@@ -28,10 +28,24 @@ namespace OgreENet {
 
 class OgreENetHost
 {
+    /**
+     * @brief OgreENetHost
+     * @param address
+     * @param maxClients
+     * @param maxChannels
+     * @param incomingBandwidth
+     * @param outgoingBandwidth
+     */
+
     friend class OgreENetManager;
 
     ENetHost* _host;
     std::list<ENetPeer *> peers;
+    std::list<OgreENetPeer *> connectedPeers;
+    /**
+     \todo merge peers and connectedPeers, by retrieving the ENetPeer from the
+     OgreENetPeer
+     */
 
     OgreENetHost(const OgreENetAddress& address, size_t maxClients, size_t maxChannels, enet_uint32 incomingBandwidth, enet_uint32 outgoingBandwidth);
     OgreENetHost(size_t maxClients, size_t maxChannels, enet_uint32 incomingBandwidth, enet_uint32 outgoingBandwidth);
@@ -40,7 +54,7 @@ class OgreENetHost
 
 public:
     int service(OgreENetEvent& event, enet_uint32 timeout = 0);
-    OgreENetPeer connect(const OgreENetAddress& address, size_t channelCount, enet_uint32 userData);
+    OgreENetPeer* connect(const OgreENetAddress& address, size_t channelCount, enet_uint32 userData);
 
     /**
     @remarks
