@@ -23,13 +23,12 @@
 #define OGREENET_H
 
 #include <enet/enet.h>
-
 #include "Ogre.h"
 
 #include "OgreENetException.h"
 #include "OgreENetAddress.h"
-#include "OgreENetPeer.h"
 #include "OgreENetPacket.h"
+#include "OgreENetPeer.h"
 #include "OgreENetEvent.h"
 #include "OgreENetListener.h"
 #include "OgreENetHost.h"

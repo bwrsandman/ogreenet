@@ -32,7 +32,6 @@ class OgreENetPeer
     friend class OgreENetHost;
 
     ENetPeer* _peer;
-
     OgreENetPeer(ENetPeer *peer) : _peer(peer) {}
 
 public:
@@ -40,6 +39,15 @@ public:
     inline OgreENetAddress address() { return OgreENetAddress(_peer->address); }
     inline void* data() const { return _peer->data; }
     inline void setData(void *data) { _peer->data = data; }
+    inline int send(enet_uint8 channelID, OgreENetPacket& packet) { return enet_peer_send(_peer, channelID, packet._packet); }
+    inline void disconnect(enet_uint32 data=0) { enet_peer_disconnect(_peer, data); }
+    inline void disconnectLater(enet_uint32 data=0) { enet_peer_disconnect_later(_peer, data); }
+    inline void disconnectNow(enet_uint32 data=0) { enet_peer_disconnect_now(_peer, data); }
+    inline void reset() { enet_peer_reset(_peer); }
+    inline void ping() { enet_peer_ping(_peer); }
+    inline OgreENetPacket receive(enet_uint8* channelID) { return OgreENetPacket(enet_peer_receive(_peer, channelID)); }
+    inline int throttle(enet_uint32 rtt) { return enet_peer_throttle(_peer, rtt); }
+    inline void throttleConfigure(enet_uint32 interval, enet_uint32 acceleration, enet_uint32 deceleration) { enet_peer_throttle_configure(_peer, interval, acceleration, deceleration); }
 };
 
 }

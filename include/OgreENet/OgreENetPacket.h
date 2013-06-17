@@ -30,6 +30,7 @@ namespace OgreENet
 class OgreENetPacket
 {
     friend class OgreENetEvent;
+    friend class OgreENetPeer;
 
     ENetPacket* _packet;
 
