@@ -155,14 +155,20 @@ void OgreENetManager::deinitialize()
 
     Ogre::String strText = "Deleting " + Ogre::StringConverter::toString(mAddressList.size()) + " addresses";
     Ogre::LogManager::getSingleton().logMessage(strText);
+    for(std::list<OgreENetAddress *>::iterator it = mAddressList.begin(); it != mAddressList.end(); ++it)
+        delete(*it);
     mAddressList.clear();
 
     strText = "Deleting " + Ogre::StringConverter::toString(mEventList.size()) + " events";
     Ogre::LogManager::getSingleton().logMessage(strText);
-    mAddressList.clear();
+    for(std::list<OgreENetEvent *>::iterator it = mEventList.begin(); it != mEventList.end(); ++it)
+        delete(*it);
+    mEventList.clear();
 
     strText = "Deleting " + Ogre::StringConverter::toString(mHostList.size()) + " hosts";
     Ogre::LogManager::getSingleton().logMessage(strText);
+    for(std::list<OgreENetHost *>::iterator it = mHostList.begin(); it != mHostList.end(); ++it)
+        delete(*it);
     mHostList.clear();
 
     // Deinitialize enet
