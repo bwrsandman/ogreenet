@@ -29,6 +29,7 @@ namespace OgreENet
 
 class OgreENetPacket
 {
+    friend class OgreENetManager;
     friend class OgreENetEvent;
     friend class OgreENetPeer;
 
@@ -41,6 +42,7 @@ public:
     inline void destroy() { enet_packet_destroy(_packet); }
     inline size_t dataLength() const { return _packet->dataLength; }
     inline const enet_uint8* data() const { return _packet->data; }
+    template <typename T> inline T& typedData() const { return *((T*)_packet->data); }
     inline int resize(size_t dataLength) { return enet_packet_resize(_packet, dataLength); }
 
 };

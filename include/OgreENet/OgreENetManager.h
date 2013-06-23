@@ -80,6 +80,9 @@ public:
     OgreENetHost *createServerHost(const OgreENetAddress& address, int maxClients, int maxChannels = 0, int incomingBandwidth = 0, int outgoingBandwidth = 0);
     OgreENetHost *createClientHost(int maxClients, int maxChannels = 0, int incomingBandwidth = 0, int outgoingBandwidth = 0);
 
+    inline OgreENetPacket createPacket(const void* data, size_t dataLength, enet_uint32 flags=ENET_PACKET_FLAG_RELIABLE) { return OgreENetPacket(data, dataLength, flags); }
+    template <typename T> inline OgreENetPacket createTypedPacket(const T& data, enet_uint32 flags=ENET_PACKET_FLAG_RELIABLE) { return OgreENetPacket(&data, sizeof(T), flags); }
+
     ~OgreENetManager();
 
 private:
