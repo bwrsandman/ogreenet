@@ -37,6 +37,8 @@ class OgreENetPeer
 public:
     inline ENetPeer* enet_peer() { return _peer; }
     inline OgreENetAddress address() { return OgreENetAddress(_peer->address); }
+    inline const enet_uint16 incommingID() const { return _peer->incomingPeerID; }
+    inline const enet_uint16 outgoingID() const { return _peer->outgoingPeerID; }
     inline void* data() const { return _peer->data; }
     template <typename T> inline T& typedData() const { return *((T*)_peer->data); }
     inline void setData(void *data) { _peer->data = data; }
