@@ -49,6 +49,8 @@ class OgreENetHost
 
 public:
     int service(OgreENetEvent& event, enet_uint32 timeout = 0);
+    void serveAll(OgreENetEvent& event, enet_uint32 timeout = 0);
+
     OgreENetPeer* connect(const OgreENetAddress& address, size_t channelCount, enet_uint32 userData);
 
     /**
@@ -59,6 +61,9 @@ public:
         the callback
     */
     virtual void setEventCallback(OgreENetListener *listener) { mListener = listener;}
+    const std::list<OgreENetPeer *>& getPeers() { return peers; }
+    void sendToAllPeers(const OgreENetPacket& packet, enet_uint8 channelID=0);
+    void broadcast(const OgreENetPacket& packet, enet_uint8 channelID=0);
 
 protected:
     void handleEvent(OgreENetEvent& event);

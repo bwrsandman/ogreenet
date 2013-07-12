@@ -32,6 +32,7 @@ class OgreENetPacket
     friend class OgreENetManager;
     friend class OgreENetEvent;
     friend class OgreENetPeer;
+    friend class OgreENetHost;
 
     ENetPacket* _packet;
 

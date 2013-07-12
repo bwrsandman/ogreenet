@@ -63,6 +63,12 @@ int OgreENetHost::service(OgreENetEvent &event, enet_uint32 timeout)
     return ret;
 }
 
+void OgreENetHost::serveAll(OgreENetEvent &event, enet_uint32 timeout)
+{
+    while (service (event, timeout) > 0);
+}
+
+// outgoing connection
 OgreENetPeer* OgreENetHost::connect(const OgreENetAddress &address, size_t channelCount, enet_uint32 userData)
 {
     ENetPeer* peer = enet_host_connect(_host, &address.enet_addr(), channelCount, userData);
@@ -75,6 +81,18 @@ OgreENetPeer* OgreENetHost::connect(const OgreENetAddress &address, size_t chann
     OgreENetPeer* ret = new OgreENetPeer(peer);
     peers.push_back(ret);
     return ret;
+}
+
+void OgreENetHost::sendToAllPeers(const OgreENetPacket &packet, enet_uint8 channelID)
+{
+    for (std::list<OgreENetPeer *>::const_iterator it = peers.begin(); it != peers.end(); ++it) {
+        (*it)->send(packet, channelID);
+    }
+}
+
+void OgreENetHost::broadcast(const OgreENetPacket &packet, enet_uint8 channelID)
+{
+    enet_host_broadcast(_host, channelID, packet._packet);
 }
 
 void OgreENetHost::handleEvent(OgreENetEvent &event)
