@@ -35,8 +35,21 @@ class OgreENetPacket
 
     ENetPacket* _packet;
 
-    OgreENetPacket(ENetPacket* packet);
-    OgreENetPacket(const void* data, size_t dataLength, enet_uint32 flags);
+    OgreENetPacket(ENetPacket* packet)
+        : _packet(packet)
+    {
+        if (!_packet) {
+            Ogre::String strErr = "****** OgreENetException ****** An error occurred while trying to create an ENet packet";
+            Ogre::LogManager::getSingleton().logMessage(Ogre::LogMessageLevel::LML_CRITICAL, strErr);
+
+            throw OgreENetException(OGREENET_ERR_PACKET_NOT_CREATED, strErr, __func__, __FILE__, __LINE__);
+        }
+    }
+
+    OgreENetPacket(const void* data, size_t dataLength, enet_uint32 flags)
+        : OgreENetPacket(enet_packet_create(data, dataLength, flags))
+    {
+    }
 
 public:
     inline void destroy() { enet_packet_destroy(_packet); }

@@ -49,7 +49,10 @@ enum OGREENET_EXCEPTION_CODE
 class OgreENetException : public Ogre::Exception
 {
 public:
-    OgreENetException(int number, const Ogre::String& description, const Ogre::String& source, const char* file, long line);
+    OgreENetException(int number, const Ogre::String &description, const Ogre::String &source, const char *file, long line)
+        : Ogre::Exception(number, description, source, "OgreENetException", file, line)
+    {
+    }
 
 };
 }
