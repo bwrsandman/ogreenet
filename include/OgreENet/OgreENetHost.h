@@ -40,12 +40,7 @@ class OgreENetHost
     friend class OgreENetManager;
 
     ENetHost* _host;
-    std::list<ENetPeer *> peers;
-    std::list<OgreENetPeer *> connectedPeers;
-    /**
-     \todo merge peers and connectedPeers, by retrieving the ENetPeer from the
-     OgreENetPeer
-     */
+    std::list<OgreENetPeer *> peers;
 
     OgreENetHost(const OgreENetAddress& address, size_t maxClients, size_t maxChannels, enet_uint32 incomingBandwidth, enet_uint32 outgoingBandwidth);
     OgreENetHost(size_t maxClients, size_t maxChannels, enet_uint32 incomingBandwidth, enet_uint32 outgoingBandwidth);

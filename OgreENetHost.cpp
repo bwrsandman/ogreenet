@@ -48,11 +48,11 @@ OgreENetHost::OgreENetHost(size_t maxClients, size_t maxChannels, enet_uint32 in
 
 OgreENetHost::~OgreENetHost()
 {
-    for (std::list<OgreENetPeer*>::iterator it = connectedPeers.begin(); it != connectedPeers.end(); ++it) {
+    for (std::list<OgreENetPeer*>::iterator it = peers.begin(); it != peers.end(); ++it) {
         (*it)->disconnectNow();
         delete(*it);
     }
-    connectedPeers.clear();
+    peers.clear();
     enet_host_destroy(_host);
 }
 
@@ -73,23 +73,28 @@ OgreENetPeer* OgreENetHost::connect(const OgreENetAddress &address, size_t chann
         throw OgreENetException(OGREENET_ERR_NOT_CONN, strErr, __func__, __FILE__, __LINE__);
     }
     OgreENetPeer* ret = new OgreENetPeer(peer);
-    connectedPeers.push_back(ret);
+    peers.push_back(ret);
     return ret;
 }
 
 void OgreENetHost::handleEvent(OgreENetEvent &event)
 {
     switch(event.type()) {
-    case ENET_EVENT_TYPE_CONNECT:
+    case ENET_EVENT_TYPE_CONNECT: // incomming connection
         // Remember the new peer.
-        peers.push_back(event.peer().enet_peer());
+        peers.push_back(new OgreENetPeer(event.peer()));
         _injectConnect(event);
         break;
     case ENET_EVENT_TYPE_DISCONNECT:
         _injectDisconnect(event);
         // This is where you are informed about disconnects.
         // Simply remove the peer from the list of all peers.
-        peers.erase(std::find(peers.begin(), peers.end(), event.peer().enet_peer()));
+        for (std::list<OgreENetPeer *>::iterator it = peers.begin(); it != peers.end(); ++it) {
+            if ((*it)->enet_peer() == event.peer().enet_peer()) {
+                peers.erase(it);
+                break;
+            }
+        }
         break;
     case ENET_EVENT_TYPE_RECEIVE:
         _injectReceive(event);
