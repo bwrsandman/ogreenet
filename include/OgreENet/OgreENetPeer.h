@@ -40,8 +40,8 @@ public:
     inline void* data() const { return _peer->data; }
     template <typename T> inline T& typedData() const { return *((T*)_peer->data); }
     inline void setData(void *data) { _peer->data = data; }
-    inline int send(OgreENetPacket& packet, enet_uint8 channelID=0) { return send(channelID, packet); }
-    inline int send(enet_uint8 channelID, OgreENetPacket& packet) { return enet_peer_send(_peer, channelID, packet._packet); }
+    inline int send(const OgreENetPacket& packet, enet_uint8 channelID=0) { return send(channelID, packet); }
+    inline int send(enet_uint8 channelID, const OgreENetPacket& packet) { return enet_peer_send(_peer, channelID, packet._packet); }
     inline void disconnect(enet_uint32 data=0) { enet_peer_disconnect(_peer, data); }
     inline void disconnectLater(enet_uint32 data=0) { enet_peer_disconnect_later(_peer, data); }
     inline void disconnectNow(enet_uint32 data=0) { enet_peer_disconnect_now(_peer, data); }
