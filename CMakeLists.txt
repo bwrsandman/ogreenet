@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-set(PROJ "OgreENet")
-
-project(${PROJ})
+project("OgreENet")
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/)
 
@@ -48,21 +46,21 @@ set(HDRS
     ${ENet_INCLUDE_DIR}/OgreENetListener.h
     ${ENet_INCLUDE_DIR}/OgreENetPacket.h
 )
- 
+
 set(SRCS
     ./OgreENetManager.cpp
     ./OgreENetHost.cpp
     ${HDRS}
 )
 
-add_definitions("-std=c++0x")
+add_definitions("-std=c++11")
 
-add_library(${PROJ} ${SRCS})
+add_library(${PROJECT_NAME} ${SRCS})
 
-set(INCLUDE_INSTALL_DIR include/${PROJ})
-target_link_libraries(${PROJ} ${ENET_LIB})
+set(INCLUDE_INSTALL_DIR include/${PROJECT_NAME})
+target_link_libraries(${PROJECT_NAME} ${ENET_LIB})
 
-install(TARGETS ${PROJ}
+install(TARGETS ${PROJECT_NAME}
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib)
@@ -72,5 +70,5 @@ set(BIN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
 install(FILES ${HDRS} DESTINATION ${INCLUDE_INSTALL_DIR})
 
-install(FILES FindOgreENet.cmake DESTINATION lib/${PROJ}/cmake)
+install(FILES FindOgreENet.cmake DESTINATION lib/${PROJECT_NAME}/cmake)
 
